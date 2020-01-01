@@ -1,0 +1,31 @@
+body {
+    background-image: url("../images/Worldmap.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#main {
+    background-color: rgba(143, 177, 175, 0.7);
+    margin: 0 auto 0 auto;
+    text-align: center;
+    width: 80%;
+    height: 650px;
+}
+
+h1 {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 10px;
+    font-size: 45px;
+}
+
+button {
+    background-color: rgb(19, 95, 85);
+    font-size: 36px;
+    letter-spacing: .03em;
+    padding: 30px 90px 30px 90px;
+    text-align: center;
+    opacity: 10;
+    margin-top: 150px;
+    color: #F0F8FF;
+    border: none;
+}
