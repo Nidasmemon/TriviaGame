@@ -2,30 +2,62 @@ body {
     background-image: url("../images/Worldmap.png");
     background-size: 100%;
     background-repeat: no-repeat;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 #main {
     background-color: rgba(143, 177, 175, 0.7);
-    margin: 0 auto 0 auto;
+    margin: -20px auto 0 auto;
     text-align: center;
     width: 80%;
-    height: 650px;
+    height: 850px;
 }
 
 h1 {
-    font-family: 'Roboto Condensed', sans-serif;
     padding: 10px;
     font-size: 45px;
+    color: rgb(102, 102, 25);
 }
 
-button {
+#start {
     background-color: rgb(19, 95, 85);
+    border-radius: 25px;
     font-size: 36px;
     letter-spacing: .03em;
     padding: 30px 90px 30px 90px;
     text-align: center;
     opacity: 10;
     margin-top: 150px;
-    color: #F0F8FF;
+    color: black;
     border: none;
+    outline: none;
+}
+
+#time {
+    visibility: hidden;
+    font-size: 28px;
+}
+
+#timesUp {
+    margin: -15px auto 0 -15px;
+    font-size: 40px;
+}
+
+#ques {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+#done {
+    visibility: hidden;
+    background-color: rgb(151, 185, 27);
+    border-radius: 15px;
+    font-size: 14px;
+    padding: 10px 15px 10px 15px;
+    letter-spacing: .03em;
+    text-align: center;
+    opacity: 10;
+    color: black;
+    border: none;
+    outline: none;
 }
