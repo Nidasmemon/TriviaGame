@@ -1,89 +1,110 @@
+var quesDiv;
+var numCorrect = 0;
+var numIncorrect = 0;
+var notAnswered = 0;
+var timerIsDone = false; 
+
+
 $("#start").on("click", function () {
     $(this).remove();
     $("#time").css("visibility", "visible");
-    var counter = 5;
+    var counter = 120;
     showQuestions();
-    $("#done").css("visibility", "visible")
+quesDiv = document.getElementById('ques');
+    $("#done").css("visibility", "visible");
     var interval = setInterval(function () {
         counter--;
 
-        if (counter <= 0) {
+        if (counter === 0) {
             $("#timesUp").html("<h3>Time's Up!</h3>");
             $("#time").remove();
             $("#ques").remove();
             $("#done").remove();
-            checkAnswers();
-            showResults();
+            checkAnswers(quesDiv);
+            timerIsDone = true;
+            showResultsWhenTimerIsDone(timerIsDone);
         } else {
             $("#timer").text(counter);
         }
     }, 1000);
 });
+   
+function showQuestions(){
+var divQues = $("#ques");
 
+var output = [];
+var answers;
 
-function showQuestions() {
-    var divQues = $("#ques");
-    for (var i = 0; i < questions.length; i++) {
+for(var i=0; i<questions.length; i++){
 
-        divQues.append('<div id="question">' + questions[i].question + '</div>');
-  
-        var ans1 = questions[i].answers[0];
-        var ans2 = questions[i].answers[1];
-        var ans3 = questions[i].answers[2];
-        var ans4 = questions[i].answers[3];
-  
-        divQues.append('<input class="form-check-input" type="radio" name="radio-group'+i+'" id="radio'+i+'"><label class="form-check-label" id="radio'+i+'label" for="radio'+i+'">' + ans1 + '</label>');
-        divQues.append('<input class="form-check-input" type="radio" name="radio-group'+i+'" id="radio'+i+'"><label class="form-check-label" id="radio'+i+'label" for="radio'+i+'">' + ans2 + '</label>');
-        divQues.append('<input class="form-check-input" type="radio" name="radio-group'+i+'" id="radio'+i+'"><label class="form-check-label" id="radio'+i+'label" for="radio'+i+'">' + ans3 + '</label>');
-        divQues.append('<input class="form-check-input" type="radio" name="radio-group'+i+'" id="radio'+i+'"><label class="form-check-label" id="radio'+i+'label" for="radio'+i+'">' + ans4 + '</label><br><br>');
-    }
-  
-    
-};
+answers = [];
+
+for(let j in questions[i].answers){
+
+answers.push(
+'<label>'
++ '<input type="radio" name="question'+i+'" value="'+questions[i].answers[j]+'">'
++ questions[i].answers[j]
++ '</label>'
+);
+}
+
+output.push(
+'<div class="question">' + questions[i].question + '</div>'
++ '<div class="answers">' + answers.join('') + '</div>'
++ '<br>'
+);
+}
+
+divQues.append(output.join(''));
+}   
 
 $("#done").on("click", function() {
     $("#time").remove();
     $("#ques").remove();
     $("#timesUp").remove();
     $("#done").remove();
-    checkAnswers();
+    checkAnswers(quesDiv);
     showResults();
 });
 
 
 function showResults() {
-    $("#correct").text("Correct Answers: " + numCorrect);
-    $("#incorrect").text("Incorrect Answers: " + numIncorrect);
-    $("#unanswered").text("Unanswered: " + notAnswered);
+   $("#correct").text("Correct Answers: " + numCorrect);
+   $("#incorrect").text("Incorrect Answers: " + numIncorrect)
+  $("#unanswered").text("Unanswered: " + notAnswered);
+}
+
+function showResultsWhenTimerIsDone(myBoolean) {
+   if(myBoolean)
+   {
+$("#correct").text("Correct Answers: " + numCorrect);
+   	$("#incorrect").text("Incorrect Answers: " + numIncorrect);
+   	$("#unanswered").text("Unanswered: " + notAnswered);
+   }
 }
 
 
-function checkAnswers() {
+function checkAnswers(quesDiv) {
     var correctAns;
-    var userAnswer;
-    var numCorrect = 0;
-    var numIncorrect = 0;
-    var notAnswered = 0;
+var userAnswer = '';
 
+var answerContainers = quesDiv.querySelectorAll('.answers');
 
-    for (var i = 0; i < questions.length; i++) {
-      correctAns = questions[i].correctAnswer;
-      userAnswer = $('input[id=radio'+i+']:checked + label').value();
+for(var i=0; i<questions.length; i++){
+    correctAns = questions[i].correctAnswer;	
+userAnswer = (answerContainers[i].querySelector('input[name="question'+i+'"]:checked')||{}).value;
+console.log("The value of userAnswer for question" + i + "is: " + userAnswer);
 
-
-      if (userAnswer === correctAns) {
-        numCorrect++;
-      } else if (userAnswer === "") {
-        notAnswered++;
-      } else if (userAnswer !== correctAns) {
+if (userAnswer === correctAns) {
+numCorrect++;
+} else if (typeof userAnswer==='undefined') {
+     	notAnswered++;
+   } else if (userAnswer !== correctAns) {
         numIncorrect++;
       }
-    }
-
-    showResults();
+}
 };
-
-
 
 var questions = [{
     question: "1. Which country contains the most languages?",
